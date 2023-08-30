@@ -146,14 +146,18 @@ def order_book(orders, book, stock_name):
 #
 # Test Data Persistence
 
+
 def generate_csv():
-    """ Generate a CSV of order history. """
-    with open('test.csv', 'wb') as f:
-        writer = csv.writer(f)
-        for t, stock, side, order, size in orders(market()):
-            if t > MARKET_OPEN + SIM_LENGTH:
-                break
-            writer.writerow([t, stock, side, order, size])
+    # ...
+
+    with open('output.csv', 'wb') as file:
+        writer = csv.writer(file)
+        writer.writerow([b'Timestamp', b'Stock', b'Side', b'Order', b'Size'])  # Encode string values as bytes
+
+        for t, stock, side, order, size in data:
+            writer.writerow([t.encode('utf-8'), stock.encode('utf-8'), side.encode('utf-8'), order.encode('utf-8'), size.encode('utf-8')])
+
+# ...
 
 
 def read_csv():
